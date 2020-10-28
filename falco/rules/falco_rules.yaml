@@ -380,7 +380,7 @@
 # populate allowed_{source,destination}_{ipaddrs,networks,domains} with the
 # values that make sense for your environment.
 - macro: consider_all_outbound_conns
-  condition: (never_true)
+  condition: (always_true)
 
 # Note that this can be either individual IPs or netmasks
 - list: allowed_outbound_destination_ipaddrs
@@ -392,8 +392,8 @@
 - list: allowed_outbound_destination_domains
   items: [google.com, www.yahoo.com]
 
-- rule: Unexpected outbound connection destination
-  desc: Detect any outbound connection to a destination outside of an allowed set of ips, networks, or domain names
+- rule: Detect any outgoing connection by Sam
+  desc: Detect any outbound connection to a destination other than localhost and google DNS.
   condition: >
     consider_all_outbound_conns and outbound and not
     ((fd.sip in (allowed_outbound_destination_ipaddrs)) or
@@ -2702,7 +2702,7 @@
 
 # To use this rule, you should modify consider_hidden_file_creation.
 - macro: consider_hidden_file_creation
-  condition: (never_true)
+  condition: (always_true)
 
 - macro: user_known_create_hidden_file_activities
   condition: (never_true)
@@ -2988,7 +2988,7 @@
 # These two rules are not enabled by default. Use `never_true` in macro condition to enable them.
 
 - macro: user_known_container_drift_activities
-  condition: (always_true)
+  condition: (never_true)
 
 - rule: Container Drift Detected (chmod)
   desc: New executable created in a container due to chmod
